@@ -44,6 +44,11 @@ header {
   position: relative;
   overflow: hidden;
 }
+header > * { position: relative; }
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
 header::before {
   content: '';
   position: absolute;
@@ -109,14 +114,18 @@ h1 {
 
 /* NAV TABS */
 .tabs {
-  display: flex;
-  gap: 0;
-  padding: 0 2rem;
   border-bottom: 1px solid var(--border);
   overflow-x: auto;
   scrollbar-width: none;
 }
 .tabs::-webkit-scrollbar { display: none; }
+.tabs-inner {
+  display: flex;
+  gap: 0;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
 .tab {
   padding: 1rem 1.5rem;
   font-size: 13px;
@@ -345,32 +354,36 @@ footer {
 <body>
 
 <header>
-  <div class="header-badge">SIMILARWEB DATA — DEC 2025 ~ FEB 2026</div>
-  <h1>프롭테크 웹사이트<br>트래픽 비교 분석</h1>
-  <div class="header-sub">11개 사이트 · 파이퍼 계열 2곳 포함 · 마케팅 채널 · 유입 출처</div>
-  <div class="header-note">
-    ⚠ SimilarWeb 추정치 기반. 월 방문 수십만 이상 대형 사이트는 상대적으로 정확하나, <strong>소규모 사이트(월 수천~수만 방문)는 오차가 크고 채널 분류도 부정확할 수 있음.</strong> 절대값보다 경향성 파악에 활용 권장.
-    <br><br>
-    아래 신뢰도 구분을 참고하세요.
-  </div>
-  <div class="reliability-legend">
-    <div class="rel-item">
-      <div class="rel-dot-high"></div>
-      <span class="rel-label-high">신뢰도 보통 이상 — 월 방문 10만+, 채널 분류 참고 가능</span>
+  <div class="header-inner">
+    <div class="header-badge">SIMILARWEB DATA — DEC 2025 ~ FEB 2026</div>
+    <h1>프롭테크 웹사이트<br>트래픽 비교 분석</h1>
+    <div class="header-sub">11개 사이트 · 파이퍼 계열 2곳 포함 · 마케팅 채널 · 유입 출처</div>
+    <div class="header-note">
+      ⚠ SimilarWeb 추정치 기반. 월 방문 수십만 이상 대형 사이트는 상대적으로 정확하나, <strong>소규모 사이트(월 수천~수만 방문)는 오차가 크고 채널 분류도 부정확할 수 있음.</strong> 절대값보다 경향성 파악에 활용 권장.
+      <br><br>
+      아래 신뢰도 구분을 참고하세요.
     </div>
-    <div class="rel-item">
-      <div class="rel-dot-low"></div>
-      <span class="rel-label-low">신뢰도 낮음 — 월 방문 수만 이하, 수치는 참고용 (오차 큼)</span>
+    <div class="reliability-legend">
+      <div class="rel-item">
+        <div class="rel-dot-high"></div>
+        <span class="rel-label-high">신뢰도 보통 이상 — 월 방문 10만+, 채널 분류 참고 가능</span>
+      </div>
+      <div class="rel-item">
+        <div class="rel-dot-low"></div>
+        <span class="rel-label-low">신뢰도 낮음 — 월 방문 수만 이하, 수치는 참고용 (오차 큼)</span>
+      </div>
     </div>
   </div>
 </header>
 
 <nav>
   <div class="tabs">
-    <button class="tab active" onclick="show('traffic', this)">월간 유입량</button>
-    <button class="tab" onclick="show('channel', this)">마케팅 채널</button>
-    <button class="tab" onclick="show('engage', this)">체류시간 & 참여도</button>
-    <button class="tab" onclick="show('refer', this)">유입 출처 & 키워드</button>
+    <div class="tabs-inner">
+      <button class="tab active" onclick="show('traffic', this)">월간 유입량</button>
+      <button class="tab" onclick="show('channel', this)">마케팅 채널</button>
+      <button class="tab" onclick="show('engage', this)">체류시간 & 참여도</button>
+      <button class="tab" onclick="show('refer', this)">유입 출처 & 키워드</button>
+    </div>
   </div>
 </nav>
 
