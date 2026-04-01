@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>파이퍼 금융기관용 — 회원 안내</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  /* ── VOS Design Tokens ── */
+  :root {
+    --purple-200:  #7472FF;
+    --purple-100:  #EAEAFF;
+    --purple-dark: #5F5DE8;
+    --navy:        #171F3D;
+    --black:       #18181E;
+    --gray-500:    #6B7583;
+    --gray-400:    #AFB5BD;
+    --gray-300:    #DFE3E9;
+    --gray-200:    #ECEEF2;
+    --gray-100:    #F2F4F6;
+    --white:       #FFFFFF;
+
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --radius-sm: 10px;
+    --shadow-card: 0 2px 12px rgba(23,31,61,.07), 0 1px 3px rgba(0,0,0,.04);
+    --shadow-hover: 0 8px 28px rgba(116,114,255,.18), 0 2px 8px rgba(0,0,0,.06);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--gray-100);
+    color: var(--black);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.6;
+  }
+
+  /* ══ HEADER ══ */
+
+
+  /* ══ HERO ══ */
+  .hero {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 64px 32px 48px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .hero-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--purple-100);
+    color: var(--purple-200);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+  }
+  .hero-chip::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--purple-200);
+  }
+  .hero h1 {
+    font-size: clamp(30px, 4.5vw, 50px);
+    font-weight: 800;
+    color: var(--navy);
+    letter-spacing: -1.5px;
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+  .hero h1 span { color: var(--purple-200); }
+  .hero p {
+    font-size: 15px;
+    color: var(--gray-500);
+    font-weight: 400;
+    max-width: 480px;
+    line-height: 1.8;
+  }
+
+  /* ══ CARDS GRID ══ */
+  .cards-wrap {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 32px 80px;
+  }
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 300px);
+    gap: 14px;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  .card {
+    background: var(--white);
+    border: 1.5px solid var(--gray-300);
+    border-radius: var(--radius-lg);
+    padding: 26px 22px 28px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-card);
+    transition: box-shadow .25s, transform .25s, border-color .25s;
+    animation: fadeUp .45s ease both;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-4px);
+    border-color: var(--purple-200);
+  }
+  .card:nth-child(1) { animation-delay: .05s; }
+  .card:nth-child(2) { animation-delay: .12s; }
+  .card:nth-child(3) { animation-delay: .19s; }
+  .card:nth-child(4) { animation-delay: .26s; }
+
+  .card.featured {
+    background: var(--navy);
+    border-color: var(--navy);
+  }
+  .card.featured::after {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(116,114,255,.12);
+    pointer-events: none;
+  }
+  .card.featured:hover {
+    box-shadow: 0 10px 32px rgba(23,31,61,.35);
+    border-color: var(--purple-200);
+  }
+
+  .card-badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .8px;
+    text-transform: uppercase;
+    padding: 3px 10px;
+    border-radius: 20px;
+    margin-bottom: 18px;
+    width: fit-content;
+  }
+  .badge-free      { background: var(--gray-200); color: var(--gray-500); }
+  .badge-appraisal { background: var(--purple-100); color: var(--purple-200); }
+  .badge-loan      { background: var(--purple-100); color: var(--purple-dark); }
+  .badge-full      { background: rgba(116,114,255,.2); color: #B8B7FF; }
+
+  .card-title {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: -.5px;
+    margin-bottom: 6px;
+    line-height: 1.3;
+  }
+  .card.featured .card-title { color: var(--white); }
+
+  .card-desc {
+    font-size: 12px;
+    color: var(--gray-500);
+    line-height: 1.6;
+    margin-bottom: 20px;
+    min-height: 48px;
+  }
+  .card.featured .card-desc { color: rgba(255,255,255,.45); }
+
+  .card-divider {
+    height: 1px;
+    background: var(--gray-200);
+    margin-bottom: 18px;
+  }
+  .card.featured .card-divider { background: rgba(255,255,255,.12); }
+
+  .feature-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; flex: 1; }
+  .feature-item { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .f-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gray-400);
+    white-space: nowrap;
+    padding-top: 1px;
+    flex-shrink: 0;
+  }
+  .card.featured .f-label { color: rgba(255,255,255,.35); }
+  .f-val {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--black);
+    text-align: right;
+    line-height: 1.5;
+  }
+  .card.featured .f-val { color: var(--white); }
+  .f-val.unlimited { color: var(--purple-200); font-weight: 700; }
+  .card.featured .f-val.unlimited { color: #B8B7FF; }
+  .f-val small {
+    display: block;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--gray-400);
+    margin-top: 2px;
+  }
+  .card.featured .f-val small { color: rgba(255,255,255,.3); }
+
+  .price-block {
+    background: var(--gray-100);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+  }
+  .card.featured .price-block { background: rgba(255,255,255,.08); }
+  .price-label { font-size: 11px; font-weight: 500; color: var(--gray-500); }
+  .card.featured .price-label { color: rgba(255,255,255,.4); }
+  .price-val { font-size: 17px; font-weight: 800; color: var(--navy); letter-spacing: -.5px; }
+  .price-val.free { color: var(--purple-200); font-size: 15px; font-weight: 700; }
+  .card.featured .price-val { color: var(--white); }
+
+  .btn-card {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    transition: all .2s;
+  }
+  .btn-ghost {
+    background: var(--purple-200);
+    color: var(--white);
+    border: none;
+  }
+  .btn-ghost:hover {
+    background: var(--purple-dark);
+    color: var(--white);
+  }
+  .btn-purple { background: var(--purple-200); color: var(--white); }
+  .btn-purple:hover { background: var(--purple-dark); }
+
+  /* ══ COMPARE — 탭 카드 ══ */
+  .compare-wrap {
+    max-width: 1080px;
+    margin: 0 auto 80px;
+    padding: 0 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+  .compare-heading {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gray-500);
+    letter-spacing: .8px;
+    text-transform: uppercase;
+  }
+
+  /* 카드뉴스 너비 기준: 390px */
+  .compare-card {
+    background: var(--white);
+    border: 1.5px solid var(--gray-300);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    width: 300px;
+    max-width: 300px;
+    overflow: hidden;
+  }
+
+  .tab-header {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    background: var(--gray-100);
+    border-bottom: 1.5px solid var(--gray-200);
+  }
+  .tab-btn {
+    padding: 11px 4px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-500);
+    text-align: center;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    border-bottom: 2.5px solid transparent;
+    margin-bottom: -1.5px;
+    transition: all .2s;
+    line-height: 1.4;
+    font-family: 'Noto Sans KR', sans-serif;
+  }
+  .tab-btn:hover { color: var(--purple-200); }
+  .tab-btn.active {
+    color: var(--purple-200);
+    background: var(--white);
+    border-bottom-color: var(--purple-200);
+  }
+
+  .tab-panel { display: none; padding: 18px 18px 22px; }
+  .tab-panel.active { display: block; }
+
+  .compare-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--gray-200);
+    gap: 12px;
+  }
+  .compare-row:last-of-type { border-bottom: none; }
+  .compare-key {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-500);
+    flex-shrink: 0;
+    min-width: 88px;
+  }
+  .compare-val {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--navy);
+    text-align: right;
+    line-height: 1.5;
+  }
+  .compare-val.c-unlimited { color: var(--purple-200); }
+  .compare-val small {
+    display: block;
+    font-size: 10px;
+    font-weight: 400;
+    color: var(--gray-400);
+    margin-top: 2px;
+  }
+  .tag-free {
+    display: inline-block;
+    background: var(--purple-100);
+    color: var(--purple-200);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+  .tag-paid {
+    display: inline-block;
+    background: var(--gray-200);
+    color: var(--gray-500);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+
+  .panel-cta {
+    margin-top: 16px;
+    display: block;
+    width: 100%;
+    padding: 13px;
+    border-radius: var(--radius-sm);
+    font-size: 13px;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    background: var(--purple-200);
+    color: var(--white);
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: background .2s;
+  }
+  .panel-cta:hover { background: var(--purple-dark); }
+  .panel-cta.ghost {
+    background: var(--purple-200);
+    border: none;
+    color: var(--white);
+  }
+  .panel-cta.ghost:hover {
+    background: var(--purple-dark);
+    color: var(--white);
+  }
+
+  /* ══ FOOTER ══ */
+  .site-footer {
+    background: var(--navy);
+    padding: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-logo { font-size: 18px; font-weight: 800; color: var(--purple-200); }
+  .footer-copy { font-size: 11px; color: rgba(255,255,255,.3); }
+
+  /* ══ 카카오 플로팅 버튼 ══ */
+  .kakao-float {
+    position: fixed;
+    bottom: 28px;
+    right: 28px;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+  }
+  .kakao-float-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #FEE500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+    transition: transform .2s, box-shadow .2s;
+  }
+  .kakao-float:hover .kakao-float-btn {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.22);
+  }
+  .kakao-float-btn svg {
+    width: 30px;
+    height: 30px;
+  }
+  .kakao-float-label {
+    background: rgba(23,31,61,.82);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 20px;
+    white-space: nowrap;
+    letter-spacing: -.2px;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 860px) {
+    .cards-grid { grid-template-columns: repeat(2, 300px); }
+  }
+  @media (max-width: 520px) {
+    .cards-grid { grid-template-columns: 300px; }
+    .hero, .cards-wrap, .compare-wrap { padding-left: 16px; padding-right: 16px; }
+    .site-header { padding: 0 16px; }
+    .site-footer { flex-direction: column; gap: 8px; text-align: center; }
+    .compare-card { width: 300px; max-width: 300px; }
+  }
+</style>
+</head>
+<body>
+
+
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-chip">금융기관 전용 플랫폼</div>
+  <h1>부동산 가치평가,<br><span>파이퍼</span>가 합니다.</h1>
+  <p>AI 추정가·AVM 보고서·가격자문·리서치 데이터를<br>금융기관 맞춤 회원 체계로 제공합니다.</p>
+</section>
+
+<!-- CARDS -->
+<section class="cards-wrap">
+  <div class="cards-grid">
+
+    <!-- 준회원 -->
+    <div class="card">
+      <div class="card-badge badge-free">Free</div>
+      <div class="card-title">준회원</div>
+      <div class="card-desc">협약회원·정회원 가입 전 어떠한 서비스인지 알아보기 위한 사용자</div>
+      <div class="card-divider"></div>
+      <ul class="feature-list">
+        <li class="feature-item"><span class="f-label">아이디</span><span class="f-val">1개</span></li>
+        <li class="feature-item"><span class="f-label">AI 추정가</span><span class="f-val">월 3회</span></li>
+        <li class="feature-item"><span class="f-label">AVM 보고서</span><span class="f-val">9,000원/건</span></li>
+        <li class="feature-item"><span class="f-label">가격자문</span><span class="f-val">90,000원/건</span></li>
+        <li class="feature-item"><span class="f-label">리서치</span><span class="f-val">100,000원/회</span></li>
+      </ul>
+      <div class="price-block">
+        <span class="price-label">월 이용료</span>
+        <span class="price-val free">무료</span>
+      </div>
+      <a href="https://vos.land/join" target="_blank" class="btn-card btn-ghost">준회원 가입하기</a>
+    </div>
+
+    <!-- 감정평가 협약회원 -->
+    <div class="card">
+      <div class="card-badge badge-appraisal">감정평가 협약</div>
+      <div class="card-title">감정평가<br>협약회원</div>
+      <div class="card-desc">프라임감정평가법인에 3개월 이내 감정평가 실적이 있는 사용자</div>
+      <div class="card-divider"></div>
+      <ul class="feature-list">
+        <li class="feature-item"><span class="f-label">아이디</span><span class="f-val">상호금융조합<br>은행지점 단위</span></li>
+        <li class="feature-item"><span class="f-label">AI 추정가</span><span class="f-val unlimited">무제한</span></li>
+        <li class="feature-item"><span class="f-label">AVM 보고서</span><span class="f-val">9,000원/건</span></li>
+        <li class="feature-item"><span class="f-label">가격자문</span><span class="f-val">90,000원/건</span></li>
+        <li class="feature-item"><span class="f-label">리서치</span><span class="f-val">100,000원/회</span></li>
+      </ul>
+      <div class="price-block">
+        <span class="price-label">월 이용료</span>
+        <span class="price-val free">무료</span>
+      </div>
+      <a href="https://vos.land/join?type=appraisal" target="_blank" class="btn-card btn-ghost">협약회원 신청하기</a>
+    </div>
+
+    <!-- 대출모집 협약회원 -->
+    <div class="card">
+      <div class="card-badge badge-loan">대출모집 협약</div>
+      <div class="card-title">대출모집<br>협약회원</div>
+      <div class="card-desc">공간의가치(파이퍼 운영사)와 대출모집 협약이 체결된 금융기관 소속 사용자</div>
+      <div class="card-divider"></div>
+      <ul class="feature-list">
+        <li class="feature-item"><span class="f-label">아이디</span><span class="f-val">금융기관 단위</span></li>
+        <li class="feature-item"><span class="f-label">AI 추정가</span><span class="f-val unlimited">무제한</span></li>
+        <li class="feature-item"><span class="f-label">AVM 보고서</span><span class="f-val">9,000원/건</span></li>
+        <li class="feature-item"><span class="f-label">가격자문</span><span class="f-val">90,000원/건</span></li>
+        <li class="feature-item"><span class="f-label">리서치</span><span class="f-val">100,000원/회</span></li>
+      </ul>
+      <div class="price-block">
+        <span class="price-label">월 이용료</span>
+        <span class="price-val free">무료</span>
+      </div>
+      <a href="https://vos.land/join?type=alliance" target="_blank" class="btn-card btn-ghost">협약회원 신청하기</a>
+    </div>
+
+    <!-- 정회원 -->
+    <div class="card featured">
+      <div class="card-badge badge-full">추천 플랜</div>
+      <div class="card-title">정회원<br>(유료)</div>
+      <div class="card-desc">AI추정가·리서치·가격자문 기능을 사용하려는 금융기관 및 기업 사용자</div>
+      <div class="card-divider"></div>
+      <ul class="feature-list">
+        <li class="feature-item"><span class="f-label">아이디</span><span class="f-val">기관 전체<small>보통 10개 이하 기준</small></span></li>
+        <li class="feature-item"><span class="f-label">AI 추정가</span><span class="f-val unlimited">무제한</span></li>
+        <li class="feature-item"><span class="f-label">AVM 보고서</span><span class="f-val unlimited">무제한</span></li>
+        <li class="feature-item"><span class="f-label">가격자문</span><span class="f-val">월 4회 무료<small>추가 시 70,000원/건 · 금융기관 별도문의</small></span></li>
+        <li class="feature-item"><span class="f-label">리서치</span><span class="f-val unlimited">무제한</span></li>
+      </ul>
+      <div class="price-block">
+        <span class="price-label">월 이용료</span>
+        <span class="price-val">최저 30만원</span>
+      </div>
+      <a href="https://vos.land/pricing" target="_blank" class="btn-card btn-purple">정회원 신청하기</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section class="compare-wrap">
+  <div class="compare-heading">한눈에 비교하기</div>
+  <div class="compare-card">
+
+    <div class="tab-header" role="tablist">
+      <button class="tab-btn active" role="tab" data-tab="t1">준회원</button>
+      <button class="tab-btn" role="tab" data-tab="t2">감정평가<br>협약</button>
+      <button class="tab-btn" role="tab" data-tab="t3">대출모집<br>협약</button>
+      <button class="tab-btn" role="tab" data-tab="t4">정회원</button>
+    </div>
+
+    <!-- 준회원 -->
+    <div class="tab-panel active" id="t1">
+      <div class="compare-row">
+        <span class="compare-key">아이디</span>
+        <span class="compare-val">1개</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">AI 추정가</span>
+        <span class="compare-val"><span class="tag-paid">월 3회</span></span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">AVM 보고서</span>
+        <span class="compare-val">9,000원/건</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">가격자문</span>
+        <span class="compare-val">90,000원/건</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">리서치 데이터</span>
+        <span class="compare-val">100,000원/회</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">월 이용료</span>
+        <span class="compare-val"><span class="tag-free">무료</span></span>
+      </div>
+      <a href="https://vos.land/join" target="_blank" class="panel-cta ghost">준회원 가입하기</a>
+    </div>
+
+    <!-- 감정평가 협약 -->
+    <div class="tab-panel" id="t2">
+      <div class="compare-row">
+        <span class="compare-key">아이디</span>
+        <span class="compare-val">상호금융조합<br>은행지점 단위</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">AI 추정가</span>
+        <span class="compare-val c-unlimited">무제한 ∞</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">AVM 보고서</span>
+        <span class="compare-val">9,000원/건</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">가격자문</span>
+        <span class="compare-val">90,000원/건</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">리서치 데이터</span>
+        <span class="compare-val">100,000원/회</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">월 이용료</span>
+        <span class="compare-val"><span class="tag-free">무료</span></span>
+      </div>
+      <a href="https://vos.land/join?type=appraisal" target="_blank" class="panel-cta">협약회원 신청하기</a>
+    </div>
+
+    <!-- 대출모집 협약 -->
+    <div class="tab-panel" id="t3">
+      <div class="compare-row">
+        <span class="compare-key">아이디</span>
+        <span class="compare-val">금융기관 단위</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">AI 추정가</span>
+        <span class="compare-val c-unlimited">무제한 ∞</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">AVM 보고서</span>
+        <span class="compare-val">9,000원/건</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">가격자문</span>
+        <span class="compare-val">90,000원/건</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">리서치 데이터</span>
+        <span class="compare-val">100,000원/회</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">월 이용료</span>
+        <span class="compare-val"><span class="tag-free">무료</span></span>
+      </div>
+      <a href="https://vos.land/join?type=alliance" target="_blank" class="panel-cta">협약회원 신청하기</a>
+    </div>
+
+    <!-- 정회원 -->
+    <div class="tab-panel" id="t4">
+      <div class="compare-row">
+        <span class="compare-key">아이디</span>
+        <span class="compare-val">기관 전체<small>보통 10개 이하 기준</small></span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">AI 추정가</span>
+        <span class="compare-val c-unlimited">무제한 ∞</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">AVM 보고서</span>
+        <span class="compare-val c-unlimited">무제한 ∞</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">가격자문</span>
+        <span class="compare-val">월 4회 무료<small>추가 시 70,000원/건</small></span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">리서치 데이터</span>
+        <span class="compare-val c-unlimited">무제한 ∞</span>
+      </div>
+      <div class="compare-row">
+        <span class="compare-key">월 이용료</span>
+        <span class="compare-val">최저 30만원~</span>
+      </div>
+      <a href="https://vos.land/pricing" target="_blank" class="panel-cta">정회원 신청하기</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-logo">PIPER</div>
+  <div class="footer-copy">© 2025 공간의가치 주식회사 · vos.land</div>
+</footer>
+
+<!-- 카카오 플로팅 버튼 -->
+<a class="kakao-float" href="https://pf.kakao.com/_XCDwn/" target="_blank" aria-label="카카오톡 문의">
+  <div class="kakao-float-btn">
+    <!-- 카카오 말풍선 아이콘 -->
+    <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 6C11.163 6 4 11.82 4 19c0 4.536 2.636 8.528 6.664 10.98L9.2 34l5.62-2.824C16.2 31.7 18.07 32 20 32c8.837 0 16-5.82 16-13S28.837 6 20 6z" fill="#3B1E08"/>
+    </svg>
+  </div>
+  <span class="kakao-float-label">카카오톡 문의</span>
+</a>
+
+<script>
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(btn.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
